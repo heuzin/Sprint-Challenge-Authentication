@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+require('dotenv').config();
 
-const authenticate = require('../auth/authenticate-middleware.js');
 const authRouter = require('../auth/auth-router.js');
 const jokesRouter = require('../jokes/jokes-router.js');
 
@@ -13,6 +13,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRouter);
-server.use('/api/jokes', authenticate, jokesRouter);
+server.use('/api/jokes', jokesRouter);
+server.use(express.static(__dirname + '/../client/build/'));
 
 module.exports = server;
